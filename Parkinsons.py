@@ -26,6 +26,21 @@ def load_data(filename):
     for column in data.columns:
         data[column] = (data[column] - data[column].min()) / (data[column].max() - data[column].min())
     
+    plt.hist([78,79,67,70,73,53,48,64,68,50,60,60,76,81,70,73,85,72,61,62,72,74,63])
+    plt.title('Age with PD')
+    plt.show() 
+    plt.clf()
+    plt.hist([46,48,61,62,64,66,66,69])
+    plt.title('Age without PD')
+    plt.show()
+    plt.hist([0,1,0,0,0,1,1,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,1])
+    plt.title('sex with PD')
+    plt.show() 
+    plt.clf()
+    plt.hist([1,1,0,0,1,1,1,0])
+    plt.title('sex without PD')
+    plt.show()
+
     return names,data
 
 def split (the_data):
@@ -82,35 +97,11 @@ def run_algos (the_data):
     print("The average accuracy for rf: ", rf_average)
     print("The average accuracy for lr: ", lr_average)
 
-def display_statistics (filename,data):
-    f = open(filename, 'r')
-    meta_data = f.read().splitlines()
-    new_meta_data = []
-    for line in meta_data:
-        line = line.split(',')
-        new_meta_data.append(line)
-    f.close() # close f
-    column_names = "subject#,age,sex,test_time,motor_UPDRS,total_UPDRS,Jitter(%),Jitter(Abs),Jitter:RAP,Jitter:PPQ5,Jitter:DDP,Shimmer,Shimmer(dB),Shimmer:APQ3,Shimmer:APQ5,Shimmer:APQ11,Shimmer:DDA,NHR,HNR,RPDE,DFA,PPE"
-    column_names = column_names.split(",")
-    meta_data = pd.DataFrame(new_meta_data, columns = column_names)
-    meta_data = meta_data.apply(pd.to_numeric) #since loaded in as an object (str)
 
-    age_PD = meta_data[data['status'] == 1]
-    age_PD = age_PD['age']
-    age_HC = meta_data[data['status'] == 0]
-    age_HC = age_HC['age']
-    plt.hist(age_PD)
-    plt.title('Age with PD')
-    plt.show() 
-    plt.clf()
-    plt.hist(age_HC)
-    plt.title('Age without PD')
-    plt.show() 
 #########################################################
 #Run program:
 #########################################################
 names,the_data = load_data("parkinsons.data")
-display_statistics ('parkinsons_updrs.data',the_data)
 run_algos(the_data)
 
 
