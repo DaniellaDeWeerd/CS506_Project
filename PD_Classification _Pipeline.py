@@ -66,3 +66,5 @@ to_find = pd.DataFrame(new_data, columns = column_names)
 
 #will return whether a person has or doesn't have parkinson's and the accuracy of the algorithm
 accuracy,results = random_forest(the_data,to_find)
+print(results)
+print(accuracy)
